@@ -1,0 +1,13 @@
+name: DyrtCraftLobby
+version: Release 1.4
+website: http://dyrtcraft.pl/
+author: TheMolkaPL
+softdepend: [DyrtCraftXP]
+description: Plugin stworzony specjalnie dla DyrtCraft Network!
+
+main: pl.dyrtcraft.dyrtcraftlobby.DyrtCraftLobby
+
+commands:
+    dclobby:
+        description: Komendy administracyjne DyrtCraftLobby
+        usage: /dclobby <info|kit>
