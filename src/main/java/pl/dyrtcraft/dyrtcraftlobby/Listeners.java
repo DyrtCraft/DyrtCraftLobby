@@ -9,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -114,8 +115,9 @@ public class Listeners implements Listener {
 	}
 	
 	// Dolaczanie na serwer
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerJoin(PlayerJoinEvent e) {
+		e.setJoinMessage("§f<> §a" + e.getPlayer().getName() + " §adolaczyl do Lobby§f <>");
 		try {
 			resetPlayer(e.getPlayer());
 		} catch(NoSuchMethodException ex) {} catch(NoSuchMethodError ex) {}
@@ -125,7 +127,7 @@ public class Listeners implements Listener {
 		
 		FireworkMeta fwMeta = fw.getFireworkMeta();
 		fwMeta.addEffect(FireworkEffect.builder()
-						.flicker(false)
+						.flicker(true)
 						.trail(true)
 						.with(Type.CREEPER)
 						.withColor(Color.GREEN)
@@ -162,13 +164,15 @@ public class Listeners implements Listener {
 	}
 	
 	// Quit
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onPlayerQuit(PlayerQuitEvent e) {
+		e.setQuitMessage("§f<> §a" + e.getPlayer().getName() + " §awyszedl z Lobby§f <>");
+		
 		Firework fw = (Firework) e.getPlayer().getWorld().spawn(e.getPlayer().getLocation(), Firework.class);
 		
 		FireworkMeta fwMeta = fw.getFireworkMeta();
 		fwMeta.addEffect(FireworkEffect.builder()
-						.flicker(false)
+						.flicker(true)
 						.trail(true)
 						.with(Type.CREEPER)
 						.withColor(Color.RED)

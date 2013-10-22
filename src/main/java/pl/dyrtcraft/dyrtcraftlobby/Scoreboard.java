@@ -21,19 +21,31 @@ public class Scoreboard {
 	public static void setScoreboard(Player player) {
 		player.getScoreboard().clearSlot(DisplaySlot.SIDEBAR);
 		
-		int xp = XP.getXp(player.toString());
 		ScoreboardManager sm = Bukkit.getScoreboardManager();
 		org.bukkit.scoreboard.Scoreboard tablica = sm.getNewScoreboard();
 		
-		Objective obj = tablica.registerNewObjective("tablica","dummy");
-		obj.setDisplayName(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "DyrtCraft Network");
+		Objective obj = tablica.registerNewObjective("tablicaxp","dummy");
+		obj.setDisplayName(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "DyrtCraft Netowork");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
 		
 		// XP
 		Score sc = obj.getScore(Bukkit.getOfflinePlayer("§6Ilosc XP"));
-		sc.setScore(xp);
+		sc.setScore(getXP(player));
+		
+		// Ilosc graczy na serwerze
+		Score sc2 = obj.getScore(Bukkit.getOfflinePlayer("§6Ilosc graczy"));
+		sc2.setScore(Bukkit.getOfflinePlayers().length);
 		
 		player.setScoreboard(tablica);
+	}
+	
+	public static int getXP(Player player) {
+		try {
+			int xp = XP.getXp(player.getName());
+			return xp;
+		} catch(Exception ex) {
+			return -1;
+		}
 	}
 	
 }
