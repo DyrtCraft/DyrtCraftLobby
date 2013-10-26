@@ -16,9 +16,11 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryPickupItemEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
@@ -37,16 +39,16 @@ public class Listeners implements Listener {
 		plugin = dyrtCraftLobby;
 	}
 	
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onEntityDamage(EntityDamageEvent e) {
 		e.setCancelled(true);
 	}
 	
 	// Niszczenie blocku (cuboid)
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockBreak(BlockBreakEvent e) {
 		Player p = (Player) e.getPlayer();
-		if(p.getGameMode() == GameMode.CREATIVE && p.isOp()) {
+		if(p.isOp() && plugin.protect == false) {
 			// To co ma sie wykonac na trybie gry kreatywnym
 		} else {
 			// Jezeli gracz nie jest OP, oraz nie posiadam GameMode Creative
@@ -55,10 +57,10 @@ public class Listeners implements Listener {
 	}
 	
 	// Stawianie bloku (cuboid)
-	@EventHandler
+	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBlockPlace(BlockPlaceEvent e) {
 		Player p = (Player) e.getPlayer();
-		if(p.getGameMode() == GameMode.CREATIVE && p.isOp()) {
+		if(p.isOp() && plugin.protect == false) {
 			// To co ma sie wykonac na trybie gry kreatywnym
 		} else {
 			// Jezeli gracz nie jest OP, oraz nie posiadam GameMode Creative
@@ -75,7 +77,7 @@ public class Listeners implements Listener {
 	public void onInventoryClick(InventoryClickEvent e) {
 		try {
 			Player p = (Player) e.getWhoClicked();
-			if(p.getGameMode() == GameMode.CREATIVE && p.isOp()) {
+			if(p.isOp() && plugin.protect == false) {
 				// To co ma sie wykonac na trybie gry kreatywnym
 			} else {
 				// Jezeli gracz nie jest OP, oraz nie posiadam GameMode Creative
@@ -84,11 +86,16 @@ public class Listeners implements Listener {
 		} catch(NullPointerException ex) {}
 	}
 	
+	@EventHandler
+	public void onInventoryPickupItem(InventoryPickupItemEvent e) {
+		e.setCancelled(true);
+	}
+	
 	// Dropienie itemu
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent e) {
 		Player p = (Player) e.getPlayer();
-		if(p.getGameMode() == GameMode.CREATIVE && p.isOp()) {
+		if(p.isOp() && plugin.protect == false) {
 			// To co ma sie wykonac na trybie gry kreatywnym
 		} else {
 			// Jezeli gracz nie jest OP, oraz nie posiadam GameMode Creative
@@ -104,7 +111,7 @@ public class Listeners implements Listener {
 			}
 			// Dywan
 			if(e.getClickedBlock().getType() == Material.CARPET) {
-				if(e.getPlayer().getGameMode() == GameMode.CREATIVE && e.getPlayer().isOp()) {
+				if(e.getPlayer().isOp() && plugin.protect == true) {
 					// To co ma sie wykonac na trybie gry kreatywnym
 				} else {
 					// Jezeli gracz nie jest OP, oraz nie posiada GameMode Creative
@@ -138,9 +145,16 @@ public class Listeners implements Listener {
 	}
 	
 	@EventHandler
+	public void onPlayerKick(PlayerKickEvent e) {
+		e.setLeaveMessage("§f<> §a" + e.getPlayer().getName() + " §awyszedl z Lobby§f <>");
+	}
+	
+	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
 		// Teleportacja na dole mapy
 		if(e.getTo().getBlockY() < 60) {
+			if(e.getPlayer().isOp() && plugin.protect == false) { return; }
+			
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
 			try {
 				resetPlayer(e.getPlayer());
@@ -148,6 +162,8 @@ public class Listeners implements Listener {
 		}
 		// Teleportacja na gorze mapy
 		if(e.getTo().getBlockY() > 90) {
+			if(e.getPlayer().isOp() && plugin.protect == false) { return; }
+			
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
 			try {
 				resetPlayer(e.getPlayer());
@@ -158,6 +174,8 @@ public class Listeners implements Listener {
 	// Respawn
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent e) {
+		if(e.getPlayer().isOp() && plugin.protect == false) { return; }
+		
 		try {
 			resetPlayer(e.getPlayer());
 		} catch (NoSuchMethodException ex) {} catch(NoSuchMethodError ex) {}
@@ -194,7 +212,8 @@ public class Listeners implements Listener {
 		player.setAllowFlight(true);
 		player.setExp(0);
 		player.setFoodLevel(20);
-		player.setGameMode(GameMode.ADVENTURE);
+		//player.setGameMode(GameMode.ADVENTURE);
+		player.setGameMode(GameMode.CREATIVE);
 		player.setHealth(20.0);
 		player.setLevel(0);
 		
