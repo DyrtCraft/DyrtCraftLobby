@@ -1,5 +1,6 @@
 package pl.dyrtcraft.dyrtcraftlobby;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -142,6 +143,13 @@ public class Listeners implements Listener {
 						.build());
 		fwMeta.setPower(1);
 		fw.setFireworkMeta(fwMeta);
+		
+		if(e.getPlayer().isOp()) {
+			e.getPlayer().sendMessage(ChatColor.AQUA + "[DCLobby] Witaj " + e.getPlayer().getName() + ChatColor.AQUA + " ponownie na serwerze!");
+			if(plugin.protect == false) {
+				e.getPlayer().sendMessage(ChatColor.AQUA + "[DCLobby] Ustawienia zabezpieczen sa ustawione na \"false\"! Zmien je uzywajac /dclobby protect true.");
+			}
+		}
 	}
 	
 	@EventHandler
@@ -151,19 +159,21 @@ public class Listeners implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
+		if(e.getPlayer().isOp() && plugin.protect == false) { return; }
 		// Teleportacja na dole mapy
-		if(e.getTo().getBlockY() < 60) {
-			if(e.getPlayer().isOp() && plugin.protect == false) { return; }
-			
+		if(e.getTo().getBlockY() < 60 || e.getTo().getBlockY() > 90) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
 			try {
 				resetPlayer(e.getPlayer());
 			} catch(NoSuchMethodException ex) {} catch(NoSuchMethodError ex) {}
 		}
-		// Teleportacja na gorze mapy
-		if(e.getTo().getBlockY() > 90) {
-			if(e.getPlayer().isOp() && plugin.protect == false) { return; }
-			
+		if(e.getTo().getBlockX() < -40 || e.getTo().getBlockX() > 40) {
+			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
+			try {
+				resetPlayer(e.getPlayer());
+			} catch(NoSuchMethodException ex) {} catch(NoSuchMethodError ex) {}
+		}
+		if(e.getTo().getBlockZ() < -40 || e.getTo().getBlockZ() > 40) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
 			try {
 				resetPlayer(e.getPlayer());

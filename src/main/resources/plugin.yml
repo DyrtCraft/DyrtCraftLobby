@@ -1,8 +1,9 @@
 name: DyrtCraftLobby
-version: Release 1.4.3
+version: Release 1.4.4
 website: http://dyrtcraft.pl/
 author: TheMolkaPL
 softdepend: [DyrtCraftXP]
+prefix: DCLobby
 description: Plugin stworzony specjalnie dla DyrtCraft Network!
 
 main: pl.dyrtcraft.dyrtcraftlobby.DyrtCraftLobby
