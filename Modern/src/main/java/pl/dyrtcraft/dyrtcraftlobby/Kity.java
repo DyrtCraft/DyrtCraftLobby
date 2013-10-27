@@ -88,4 +88,12 @@ public class Kity {
 		return ksiazka2;
 	}
 	
+	public static ItemStack sklep() {
+		ItemStack sklep = new ItemStack(Material.EMERALD, 1);
+		ItemMeta sklepMeta = sklep.getItemMeta();
+		sklepMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Sklep Lobby");
+		sklep.setItemMeta(sklepMeta);
+		return sklep;
+	}
+	
 }

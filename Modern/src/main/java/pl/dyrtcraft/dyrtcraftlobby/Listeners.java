@@ -22,10 +22,10 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.event.weather.WeatherChangeEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -144,10 +144,11 @@ public class Listeners implements Listener {
 		fwMeta.setPower(1);
 		fw.setFireworkMeta(fwMeta);
 		
-		if(e.getPlayer().isOp()) {
+		if(e.getPlayer().isOp() || e.getPlayer().hasPermission("essentials.gc")) {
 			e.getPlayer().sendMessage(ChatColor.AQUA + "[DCLobby] Witaj " + e.getPlayer().getName() + ChatColor.AQUA + " ponownie na serwerze!");
-			if(plugin.protect == false) {
-				e.getPlayer().sendMessage(ChatColor.AQUA + "[DCLobby] Ustawienia zabezpieczen sa ustawione na \"false\"! Zmien je uzywajac /dclobby protect true.");
+			if(e.getPlayer().hasPermission("essentials.gc")) {
+				e.getPlayer().sendMessage(ChatColor.AQUA + "[DCLobby] Obecnia ilosc TPS i statystki serwera:");
+				e.getPlayer().chat("/gc");
 			}
 		}
 	}
@@ -155,6 +156,32 @@ public class Listeners implements Listener {
 	@EventHandler
 	public void onPlayerKick(PlayerKickEvent e) {
 		e.setLeaveMessage("§f<> §a" + e.getPlayer().getName() + " §awyszedl z Lobby§f <>");
+		
+		Firework fw = (Firework) e.getPlayer().getWorld().spawn(e.getPlayer().getLocation(), Firework.class);
+		
+		FireworkMeta fwMeta = fw.getFireworkMeta();
+		fwMeta.addEffect(FireworkEffect.builder()
+						.flicker(true)
+						.trail(true)
+						.with(Type.CREEPER)
+						.withColor(Color.RED)
+						.withFade(Color.RED)
+						.build());
+		fwMeta.setPower(1);
+		fw.setFireworkMeta(fwMeta);
+	}
+	
+	@EventHandler
+	public void onPlayerLogin(PlayerLoginEvent e) {
+		if(plugin.prace == true) {
+			if(e.getPlayer().isOp() || e.getPlayer().hasPermission("dyrtcraft.lobby.join")) {
+				e.allow();
+				return;
+			} else {
+				e.disallow(null, plugin.getKickMessage());
+				return;
+			}
+		}
 	}
 	
 	@EventHandler
@@ -210,21 +237,24 @@ public class Listeners implements Listener {
 		fw.setFireworkMeta(fwMeta);
 	}
 	
-	// Pogoda
-	public void onWeatherChange(WeatherChangeEvent e) {
-		e.getWorld().setWeatherDuration(0);
-		e.setCancelled(true);
-	}
-	
-	public static void resetPlayer(Player player) throws NoSuchMethodException {
+	public void resetPlayer(Player player) throws NoSuchMethodException {
+		if(player.isOp()) {
+			if(plugin.prace == true) {
+				player.sendMessage(ChatColor.AQUA + "[DCLobby] " + ChatColor.RED + "Prace techniczne sa ustawione na \"true\"! Zmien je uzywajac /dclobby prace false");
+			}
+			if(plugin.protect == false) {
+				player.sendMessage(ChatColor.AQUA + "[DCLobby] " + ChatColor.RED + "Ustawienia zabezpieczen sa ustawione na \"false\"! Zmien je uzywajac /dclobby protect true.");
+			}
+		}
 		player.performCommand("spawn");
+		
+		player.getWorld().setStorm(false);
+		player.getWorld().setThundering(false);
+		player.getWorld().setTime(8);
 		
 		player.setAllowFlight(true);
 		player.setExp(0);
-		player.setFoodLevel(20);
-		//player.setGameMode(GameMode.ADVENTURE);
 		player.setGameMode(GameMode.CREATIVE);
-		player.setHealth(20.0);
 		player.setLevel(0);
 		
 		player.getInventory().setHelmet(null);
@@ -234,9 +264,9 @@ public class Listeners implements Listener {
 		
 		player.getInventory().clear();
 		
-		player.getInventory().addItem(Kity.compass());
-		player.getInventory().addItem(Kity.ksiazka1());
-		player.getInventory().addItem(Kity.ksiazka2());
+		player.getInventory().setItem(0, Kity.compass());
+		player.getInventory().setItem(1, Kity.ksiazka1());
+		player.getInventory().setItem(2, Kity.ksiazka2());
 		
 		player.removePotionEffect(PotionEffectType.SPEED);
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 0));

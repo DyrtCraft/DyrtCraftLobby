@@ -1,5 +1,5 @@
 name: DyrtCraftLobby
-version: Release 1.4.4
+version: Modern Release 1.5
 website: http://dyrtcraft.pl/
 author: TheMolkaPL
 softdepend: [DyrtCraftXP]
@@ -11,4 +11,4 @@ main: pl.dyrtcraft.dyrtcraftlobby.DyrtCraftLobby
 commands:
     dclobby:
         description: Komendy administracyjne DyrtCraftLobby
-        usage: /dclobby <info|kit|protect <false|true>>
+        usage: /dclobby <info|kit|prace|protect> [false|true]
