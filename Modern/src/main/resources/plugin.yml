@@ -1,5 +1,6 @@
+# Loader file for DyrtCraftLobby "Modern" v1.5.1 by TheMolkaPL
 name: DyrtCraftLobby
-version: Modern Release 1.5
+version: Release 1.5.1
 website: http://dyrtcraft.pl/
 author: TheMolkaPL
 softdepend: [DyrtCraftXP]

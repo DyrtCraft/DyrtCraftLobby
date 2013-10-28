@@ -9,6 +9,8 @@ public class DyrtCraftLobby extends JavaPlugin {
 	public boolean protect;
 
 	public void onEnable() {
+		getServer().getLogger().info("[DCLobby] Uruchamianie DyrtCraftLobby \"Modern\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + "...");
+		
 		if(!(getServer().getPluginManager().isPluginEnabled("DyrtCraftXP"))) {
 			getLogger().warning("[DCLobby] Do poprawnego dzialania tego pluginu potrzeby jest plugin DyrtCraftXP!");
 			getLogger().warning("[DCLobby] Auto wylaczanie...");
@@ -27,6 +29,12 @@ public class DyrtCraftLobby extends JavaPlugin {
 		getServer().getLogger().info("[DCLobby] Rejestrowanie listenerów (sluchaczy)...");
 		getServer().getPluginManager().registerEvents(new pl.dyrtcraft.dyrtcraftlobby.Listeners(this), this);
 		getServer().getLogger().info("[DCLobby] Zarejestowano listenery (sluchacze)!");
+		
+		getServer().getLogger().info("[DCLobby] Stan prac technicznych: " + prace + ".");
+		getServer().getLogger().info("[DCLobby] Stan ustawien zabezpieczen: " + protect + ".");
+		
+		getServer().getLogger().info("[DCLobby] Uruchamiono DyrtCraftLobby \"Modern\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + "...");
+		
 	}
 	
 	private void shutdownServer() {

@@ -55,6 +55,7 @@ public class Commands implements CommandExecutor {
 	protected boolean aboutArg(CommandSender sender) {
 		sender.sendMessage(ChatColor.GOLD + " >==========[ " + ChatColor.BOLD + ChatColor.AQUA + "DyrtCraftLobby" + ChatColor.RESET + ChatColor.GOLD + " ]==========< ");
 		sender.sendMessage(ChatColor.GOLD + "Wersja: " + ChatColor.GRAY + plugin.getDescription().getVersion());
+		sender.sendMessage(ChatColor.GOLD + "Nazwa kodowa: " + ChatColor.GRAY + "Modern");
 		sender.sendMessage(ChatColor.GOLD + "Autor: " + ChatColor.GRAY + plugin.getDescription().getAuthors());
 		sender.sendMessage(ChatColor.GOLD + "GitHub: " + ChatColor.GRAY + "https://www.github.com/DyrtCraft/DyrtCraftLobby/Modern");
 		sender.sendMessage(ChatColor.GOLD + " >==========[ " + ChatColor.BOLD + ChatColor.AQUA + "DyrtCraftLobby" + ChatColor.RESET + ChatColor.GOLD + " ]==========< ");
@@ -63,7 +64,7 @@ public class Commands implements CommandExecutor {
 	
 	protected boolean erArg(CommandSender sender, String reason) {
 		sender.sendMessage(ChatColor.AQUA + "[DCLobby] " + ChatColor.RED + reason);
-		sender.sendMessage(ChatColor.RED + "Uzycie: " + plugin.getCommand("dclobby").getUsage());
+		sender.sendMessage(ChatColor.GRAY + "Uzycie: " + plugin.getCommand("dclobby").getUsage());
 		return true;
 	}
 	
