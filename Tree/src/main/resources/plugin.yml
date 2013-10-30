@@ -1,0 +1,17 @@
+# Loader file for DyrtCraftLobby "Tree" v1.0 by TheMolkaPL
+name: DyrtCraftLobby
+version: Release 1.0 - SNAPSHOT 01
+website: http://dyrtcraft.pl/
+author: TheMolkaPL
+softdepend: [DyrtCraftXP]
+prefix: DCLobby
+description: Plugin stworzony specjalnie dla DyrtCraft Network!
+
+# !!! NIE DOTYKAC !!!
+main: pl.dyrtcraft.dyrtcraftlobby.tree.DyrtCraftLobbyTree
+# !!! NIE DOTYKAC !!!
+
+commands:
+    dclobby:
+        description: Komendy administracyjne DyrtCraftLobby Tree
+        usage: /dclobby <info|kit|protect|reset|whitelist> [false|nick|true]
