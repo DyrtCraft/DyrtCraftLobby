@@ -15,6 +15,7 @@ import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.Cuboid;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.EntityDamageListener;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.FoodLevelChangeListener;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.InventoryListener;
+import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.PlayerChangeServerListener;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.PlayerDropItemListener;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.PlayerInteractListener;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.PlayerJoinListener;
@@ -51,6 +52,7 @@ public class DyrtCraftLobbyTree extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
 		getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(this), this);
 		getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerChangeServerListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerDropItemListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);

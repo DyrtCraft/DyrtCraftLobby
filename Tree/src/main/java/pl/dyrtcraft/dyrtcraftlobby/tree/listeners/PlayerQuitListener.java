@@ -11,6 +11,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import pl.DyrtCraft.DyrtCraftXP.events.PlayerChangeServerEvent;
+
 import pl.dyrtcraft.dyrtcraftlobby.tree.DyrtCraftLobbyTree;
 import pl.dyrtcraft.dyrtcraftlobby.tree.Scoreboard;
 
@@ -23,7 +25,7 @@ public class PlayerQuitListener implements Listener {
 	}
 	
 	@EventHandler
-	public void onPlayerQuit(PlayerQuitEvent e) {
+	public void onPlayerQuit(PlayerQuitEvent e, PlayerChangeServerEvent e2) {
 		e.setQuitMessage("§f<> §a" + e.getPlayer().getName() + " §awyszedl z Lobby§f <>");
 		
 		Firework fw = (Firework) e.getPlayer().getWorld().spawn(e.getPlayer().getLocation(), Firework.class);
