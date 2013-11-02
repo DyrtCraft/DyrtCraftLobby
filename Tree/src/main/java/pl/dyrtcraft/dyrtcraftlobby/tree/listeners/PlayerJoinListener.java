@@ -18,10 +18,9 @@ public class PlayerJoinListener implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent e) {
 		e.setJoinMessage("§f<> §a" + e.getPlayer().getName() + " §adolaczyl do Lobby§f <>");
 		
-		DyrtCraftLobbyTree.checkNotifications(e.getPlayer());
 		DyrtCraftLobbyTree.resetPlayer(e.getPlayer());
 		
-		if(e.getPlayer().hasPermission("essentials.gc")) {
+		if(e.getPlayer().hasPermission("essentials.gc") && plugin.getServer().getPluginManager().isPluginEnabled("EssentialsSpawn")) {
 			e.getPlayer().performCommand("gc");
 		}
 	}

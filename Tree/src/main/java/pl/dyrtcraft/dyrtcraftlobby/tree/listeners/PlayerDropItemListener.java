@@ -18,12 +18,13 @@ public class PlayerDropItemListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent e) {
-		if(!DyrtCraftLobbyTree.protect == false && e.getPlayer().hasPermission("lobby.interact")) {
+		if(DyrtCraftLobbyTree.protect == true && e.getPlayer().hasPermission("lobby.interact")) {
 			e.setCancelled(true);
 			if(e.getPlayer().hasPermission("lobby.protect.set")) {
 				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby wyrzucac itemy nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 		}
+		if(DyrtCraftLobbyTree.protect == false && e.getPlayer().hasPermission("lobby.interact")) { return; }
 		e.setCancelled(true);
 	}
 	

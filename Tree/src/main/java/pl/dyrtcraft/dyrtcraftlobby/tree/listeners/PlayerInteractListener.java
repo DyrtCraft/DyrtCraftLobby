@@ -6,7 +6,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import pl.DyrtCraft.DyrtCraftXP.api.BungeeInventory;
-
 import pl.dyrtcraft.dyrtcraftlobby.tree.DyrtCraftLobbyTree;
 
 public class PlayerInteractListener implements Listener {
