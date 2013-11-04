@@ -7,7 +7,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import pl.DyrtCraft.DyrtCraftXP.DyrtCraftPlugin;
+import pl.DyrtCraft.DyrtCraftXP.api.DyrtCraftPlugin;
 
 public class DclobbyCommand implements CommandExecutor {
 

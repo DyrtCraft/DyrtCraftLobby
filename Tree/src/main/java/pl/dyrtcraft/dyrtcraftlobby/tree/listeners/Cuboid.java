@@ -19,6 +19,10 @@ public class Cuboid implements Listener {
 		plugin = dyrtCraftLobbyTree;
 	}
 	
+	/*
+	 *  TODO Flaga na ogien
+	 */
+	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
 		if(DyrtCraftLobbyTree.protect == true) {

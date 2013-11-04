@@ -10,7 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import pl.DyrtCraft.DyrtCraftXP.DyrtCraftPlugin;
+import pl.DyrtCraft.DyrtCraftXP.api.DyrtCraftPlugin;
+import pl.DyrtCraft.DyrtCraftXP.api.Kits;
 
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.Cuboid;
 import pl.dyrtcraft.dyrtcraftlobby.tree.listeners.EntityDamageListener;
@@ -114,6 +115,7 @@ public class DyrtCraftLobbyTree extends JavaPlugin {
 		
 		player.getInventory().clear();
 		
+		player.getInventory().setItem(0, Kits.compass());
 		Kit.sendKit(player);
 		
 		player.removePotionEffect(PotionEffectType.SPEED);

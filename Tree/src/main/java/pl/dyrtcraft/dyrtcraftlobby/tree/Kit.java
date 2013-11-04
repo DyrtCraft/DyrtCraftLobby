@@ -1,25 +1,13 @@
 package pl.dyrtcraft.dyrtcraftlobby.tree;
 
-import java.util.Arrays;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
-import org.bukkit.inventory.meta.ItemMeta;
 
 public class Kit {
-
-	public static ItemStack compass() {
-		ItemStack a = new ItemStack(Material.COMPASS, 1);
-		ItemMeta aMeta = a.getItemMeta();
-		aMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Serwery DyrtCraft Network");
-		aMeta.setLore(Arrays.asList(ChatColor.DARK_GREEN + "Kliknij, aby wybrac serwer!"));
-		a.setItemMeta(aMeta);
-		return a;
-	}
 	
 	public static ItemStack witamyBook() {
 		ItemStack a = new ItemStack(Material.WRITTEN_BOOK, 1);
@@ -86,7 +74,6 @@ public class Kit {
 	
 	public static void sendKit(Player player) {
 		Inventory inv = player.getInventory();
-		inv.setItem(0, Kit.compass());
 		inv.setItem(1, Kit.witamyBook());
 		inv.setItem(2, Kit.zakupBook());
 	}
