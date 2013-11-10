@@ -32,10 +32,6 @@ public class Scoreboard {
 		Score sc = obj.getScore(Bukkit.getOfflinePlayer("§6Twoja ilosc XP"));
 		sc.setScore(getXP(player));
 		
-		// Ilosc graczy na serwerze
-		Score sc2 = obj.getScore(Bukkit.getOfflinePlayer("§6Ilosc graczy"));
-		sc2.setScore(Bukkit.getOnlinePlayers().length);
-		
 		player.setScoreboard(tablica);
 	}
 	

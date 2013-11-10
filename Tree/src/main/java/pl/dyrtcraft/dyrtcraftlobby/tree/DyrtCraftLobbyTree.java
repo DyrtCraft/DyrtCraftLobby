@@ -43,13 +43,13 @@ public class DyrtCraftLobbyTree extends JavaPlugin {
 			return;*/
 		}
 		
-		getLogger().info("[DCLobby] Ustawianie domyslnych ustawien...");
+		getLogger().info("Ustawianie domyslnych ustawien...");
 		protect = true;
 		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia protect na true", 0);
 		whitelist = false;
-		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia protect na false", 0);
+		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia whitelist na false", 0);
 		
-		getLogger().info("[DCLobby] Rejestrowanie listenerów...");
+		getLogger().info("Rejestrowanie listenerów...");
 		getServer().getPluginManager().registerEvents(new Cuboid(this), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
 		getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(this), this);
@@ -63,7 +63,7 @@ public class DyrtCraftLobbyTree extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerRespawnListener(this), this);
-		getLogger().info("[DCLobby] Pomyslnie zarejestrowano listenery!");
+		getLogger().info("Pomyslnie zarejestrowano listenery!");
 		
 		getCommand("dclobby").setExecutor(new DclobbyCommand(this));
 	}

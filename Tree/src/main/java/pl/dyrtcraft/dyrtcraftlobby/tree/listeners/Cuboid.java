@@ -2,10 +2,13 @@ package pl.dyrtcraft.dyrtcraftlobby.tree.listeners;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import pl.dyrtcraft.dyrtcraftlobby.tree.DyrtCraftLobbyTree;
@@ -38,6 +41,11 @@ public class Cuboid implements Listener {
 	}
 	
 	@EventHandler
+	public void onBlockBurn(BlockBurnEvent e) {
+		e.setCancelled(true);
+	}
+	
+	@EventHandler
 	public void onBlockFade(BlockFadeEvent e) {
 		e.setCancelled(true);
 	}
@@ -54,6 +62,11 @@ public class Cuboid implements Listener {
 		if(!e.getPlayer().hasPermission("lobby.interact")) {
 			e.setCancelled(true);
 		}
+	}
+	
+	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+	public void onBlockSpread(BlockSpreadEvent e) {
+		e.setCancelled(true);
 	}
 	
 	@EventHandler
