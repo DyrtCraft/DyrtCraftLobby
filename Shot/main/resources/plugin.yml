@@ -1,0 +1,16 @@
+name: DyrtCraftLobby
+version: Release 1.0
+website: http://dyrtcraft.pl/
+author: TheMolkaPL
+softdepend: [DyrtCraftXP]
+prefix: DCLobby
+description: Plugin stworzony specjalnie dla DyrtCraft Network!
+
+# !!! NIE DOTYKAC !!!
+main: pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot
+# !!! NIE DOTYKAC !!!
+
+commands:
+    dclobby:
+        description: Komendy administracyjne DyrtCraftLobby Shot
+        usage: /dclobby <info|kit|protect|reset|whitelist> [false|nick|true]
