@@ -5,7 +5,7 @@ import org.bukkit.ChatColor;
 public class Util {
 
 	public static String alreadySet(boolean value) {
-		String a = ChatColor.RED + "To ustawienie juz jest aktualnie nie \"" + value + "\"!";
+		String a = ChatColor.RED + "To ustawienie juz jest aktualnie na \"" + value + "\"!";
 		return a;
 	}
 	

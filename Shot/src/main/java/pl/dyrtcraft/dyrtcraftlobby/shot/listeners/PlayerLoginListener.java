@@ -4,6 +4,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
+import pl.DyrtCraft.DyrtCraftXP.api.DyrtCraftPlugin;
+
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 import pl.dyrtcraft.dyrtcraftlobby.shot.Util;
 
@@ -23,6 +25,7 @@ public class PlayerLoginListener implements Listener {
 				return;
 			} else {
 				e.disallow(null, Util.kickMessage());
+				DyrtCraftPlugin.sendMsgToOp(e.getPlayer().getName() + " nie polaczyl sie z serwerem: Ustawienie whitelist jest na \"true\"", 0);
 				return;
 			}
 		}

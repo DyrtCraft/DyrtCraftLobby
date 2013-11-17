@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockBurnEvent;
 import org.bukkit.event.block.BlockFadeEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.block.BlockSpreadEvent;
+import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
@@ -63,6 +64,12 @@ public class Cuboid implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onBlockSpread(BlockSpreadEvent e) {
 		e.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onExplostionPrime(ExplosionPrimeEvent e) {
+		e.setCancelled(true);
+		e.setFire(false);
 	}
 	
 	@EventHandler

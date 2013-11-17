@@ -15,17 +15,21 @@ import pl.DyrtCraft.DyrtCraftXP.api.Kits;
 
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.Cuboid;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.EntityDamageListener;
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.EntityShootBowListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.FoodLevelChangeListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.InventoryListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerChangeServerListener;
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerDeathListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerDropItemListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerInteractListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerJoinListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerKickListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerLoginListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerMoveListener;
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerPickupItemListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerQuitListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerRespawnListener;
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PotionSplashListener;
 
 public class DyrtCraftLobbyShot extends JavaPlugin {
 	
@@ -37,6 +41,7 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 	@Override
 	public void onEnable() {
 		getLogger().info("Uruchamianie DyrtCraftLobby \"Shot\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + "...");
+		long time = System.currentTimeMillis();
 		
 		if(!getServer().getPluginManager().isPluginEnabled("DyrtCraftXP")) {
 			DyrtCraftLobbyShot.kickAll();
@@ -61,22 +66,34 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia whitelist na false", 0);
 		
 		getLogger().info("Rejestrowanie listenerów...");
+		long listTime = System.currentTimeMillis();
 		getServer().getPluginManager().registerEvents(new Cuboid(this), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
+		getServer().getPluginManager().registerEvents(new EntityShootBowListener(this), this);
 		getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(this), this);
 		getServer().getPluginManager().registerEvents(new InventoryListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerChangeServerListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerDropItemListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerInteractListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerKickListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerMoveListener(this), this);
+		getServer().getPluginManager().registerEvents(new PlayerPickupItemListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
 		getServer().getPluginManager().registerEvents(new PlayerRespawnListener(this), this);
-		getLogger().info("Pomyslnie zarejestrowano listenery!");
+		getServer().getPluginManager().registerEvents(new PotionSplashListener(this), this);
+		long finListTime = System.currentTimeMillis() - listTime;
+		getLogger().info("Pomyslnie zarejestrowano listenery! (" + finListTime + " ms)");
 		
+		getLogger().info("Rejestrowanie komend...");
 		getCommand("dclobby").setExecutor(new DclobbyCommand(this));
+		getLogger().info("Zarejestrowano komendy! " + getDescription().getCommands());
+		
+		long finTime = System.currentTimeMillis() - time;
+		getLogger().info("DyrtCraftLobby \"Shot\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + " zostal zaladowany! (" + finTime + " ms)");
+		DyrtCraftPlugin.sendMsgToOp("DyrtCraftLobby \"Shot\" zostal zaladowny w " + finTime + " ms", 0);
 	}
 	
 	@Override

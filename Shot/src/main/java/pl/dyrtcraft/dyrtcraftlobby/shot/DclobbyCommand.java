@@ -118,6 +118,8 @@ public class DclobbyCommand implements CommandExecutor {
 			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia protect na false", 0);
 			return true;
 		} else {
+			sender.sendMessage(Util.prefix() + Util.error() + " Podano nieprawidlowy argument!");
+			sender.sendMessage(Util.usage() + "/dclobby protect <false|true>");
 			return true;
 		}
 	}
@@ -179,7 +181,9 @@ public class DclobbyCommand implements CommandExecutor {
 			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia whitelist na false", 0);
 			return true;
 		} else {
-			return erArg(sender, "Podano bledny argument");
+			sender.sendMessage(Util.prefix() + Util.error() + " Podano nieprawidlowy argument!");
+			sender.sendMessage(Util.usage() + "/dclobby whitelist <false|true>");
+			return true;
 		}
 	}
 	
