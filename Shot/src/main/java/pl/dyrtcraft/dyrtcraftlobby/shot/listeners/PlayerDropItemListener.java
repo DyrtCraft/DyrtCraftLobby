@@ -20,7 +20,7 @@ public class PlayerDropItemListener implements Listener {
 	public void onPlayerDropItem(PlayerDropItemEvent e) {
 		if(DyrtCraftLobbyShot.protect == true && e.getPlayer().hasPermission("lobby.interact")) {
 			e.setCancelled(true);
-			if(e.getPlayer().hasPermission("lobby.protect.set")) {
+			if(e.getPlayer().isOp()) {
 				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby wyrzucac itemy nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 		}

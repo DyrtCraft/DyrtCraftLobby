@@ -9,6 +9,11 @@ public class Util {
 		return a;
 	}
 	
+	public static String chatOff() {
+		String a = ChatColor.RED + "Na serwerze Lobby chat jest wylaczony!";
+		return a;
+	}
+	
 	public static String console() {
 		String a = ChatColor.RED + "Nie mozesz wyslac tej wiadomosci z poziomu konsoli!";
 		return a;
@@ -38,8 +43,8 @@ public class Util {
 		return a + b + c + d + e;
 	}
 	
-	public static String permissions(String permission) {
-		String a = ChatColor.RED + "Brak uprawnien (" + permission + ").";
+	public static String permissions() {
+		String a = ChatColor.RED + "Nie posiadasz odpowienich uprawnien.";
 		return a;
 	}
 	

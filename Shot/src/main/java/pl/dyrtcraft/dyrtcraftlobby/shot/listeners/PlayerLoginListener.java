@@ -5,7 +5,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerLoginEvent;
 
 import pl.DyrtCraft.DyrtCraftXP.api.DyrtCraftPlugin;
-
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 import pl.dyrtcraft.dyrtcraftlobby.shot.Util;
 
@@ -20,7 +19,7 @@ public class PlayerLoginListener implements Listener {
 	@EventHandler
 	public void onPlayerLogin(PlayerLoginEvent e) {
 		if(DyrtCraftLobbyShot.whitelist == true) {
-			if(e.getPlayer().hasPermission("lobby.join")) {
+			if(e.getPlayer().isOp()) {
 				e.allow();
 				return;
 			} else {

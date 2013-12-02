@@ -19,7 +19,7 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 		try {
-			if(e.getWhoClicked().hasPermission("lobby.interact") && DyrtCraftLobbyShot.protect == false) { return; }
+			if(e.getWhoClicked().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
 			e.setCancelled(true);
 		} catch(NullPointerException ex) {}
 	}
@@ -27,7 +27,7 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryInteract(InventoryInteractEvent e) {
 		try {
-			if(!e.getWhoClicked().hasPermission("lobby.interact") && DyrtCraftLobbyShot.protect == false) { return; }
+			if(!e.getWhoClicked().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
 			e.setCancelled(true);
 		} catch(NullPointerException ex) {}
 	}

@@ -9,6 +9,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
+import pl.DyrtCraft.DyrtCraftXP.api.Bar;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class PlayerKickListener implements Listener {
@@ -35,6 +36,8 @@ public class PlayerKickListener implements Listener {
 						.build());
 		fwMeta.setPower(1);
 		fw.setFireworkMeta(fwMeta);
+		
+		Bar.removeBar(e.getPlayer());
 	}
 	
 }

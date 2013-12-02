@@ -27,6 +27,9 @@ public class DclobbyCommand implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("about") || args[0].equalsIgnoreCase("info") || args[0].equalsIgnoreCase("version")) {
 					return aboutArg(sender);
 				}
+				if(args[0].equalsIgnoreCase("chat")) {
+					return chatArg(sender, null);
+				}
 				if(args[0].equalsIgnoreCase("kit")) {
 					return kitArg(sender);
 				}
@@ -43,6 +46,9 @@ public class DclobbyCommand implements CommandExecutor {
 				}
 			}
 			if(args.length == 2) {
+				if(args[0].equalsIgnoreCase("chat")) {
+					return chatArg(sender, args[1]);
+				}
 				if(args[0].equalsIgnoreCase("protect") || args[0].equalsIgnoreCase("protected")) {
 					return protectArg(sender, args[1]);
 				}
@@ -76,6 +82,44 @@ public class DclobbyCommand implements CommandExecutor {
 		return true;
 	}
 	
+	private boolean chatArg(CommandSender sender, String arg) {
+		if(arg == null) {
+			if(!sender.isOp()) {
+				sender.sendMessage(Util.prefix() + Util.permissions());
+				return true;
+			}
+			sender.sendMessage(Util.prefix() + Util.stan("chat") + DyrtCraftLobbyShot.chat + ".");
+			return true;
+		}
+		if(!sender.isOp()) {
+			sender.sendMessage(Util.prefix() + Util.permissions());
+			return true;
+		}
+		
+		if(arg.equalsIgnoreCase("true") || arg.equalsIgnoreCase("allow") || arg.equalsIgnoreCase("on")) {
+			if(DyrtCraftLobbyShot.chat == true) {
+				sender.sendMessage(Util.prefix() + Util.alreadySet(true));
+				return true;
+			}
+			DyrtCraftLobbyShot.chat = true;
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie chat na true", 0);
+			return true;
+		}
+		if(arg.equalsIgnoreCase("false") || arg.equalsIgnoreCase("deny") || arg.equalsIgnoreCase("off")) {
+			if(DyrtCraftLobbyShot.chat == false) {
+				sender.sendMessage(Util.prefix() + Util.alreadySet(false));
+				return true;
+			}
+			DyrtCraftLobbyShot.chat = false;
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie chat na false", 0);
+			return true;
+		} else {
+			sender.sendMessage(Util.prefix() + Util.error() + " Podano nieprawidlowy argument!");
+			sender.sendMessage(Util.usage() + "/dclobby chat <false|true>");
+			return true;
+		}
+	}
+	
 	private boolean kitArg(CommandSender sender) {
 		if(!(sender instanceof Player)) {
 			sender.sendMessage(Util.prefix() + Util.console());
@@ -88,15 +132,15 @@ public class DclobbyCommand implements CommandExecutor {
 	
 	private boolean protectArg(CommandSender sender, String arg) {
 		if(arg == null) {
-			if(!sender.hasPermission("lobby.protect")) {
-				sender.sendMessage(Util.prefix() + Util.permissions("lobby.protect"));
+			if(!sender.isOp()) {
+				sender.sendMessage(Util.prefix() + Util.permissions());
 				return true;
 			}
 			sender.sendMessage(Util.prefix() + Util.stan("protect") + DyrtCraftLobbyShot.protect + ".");
 			return true;
 		}
-		if(!sender.hasPermission("lobby.protect.set")) {
-			sender.sendMessage(Util.prefix() + Util.permissions("lobby.protect.set"));
+		if(!sender.isOp()) {
+			sender.sendMessage(Util.prefix() + Util.permissions());
 			return true;
 		}
 		
@@ -106,7 +150,7 @@ public class DclobbyCommand implements CommandExecutor {
 				return true;
 			}
 			DyrtCraftLobbyShot.protect = true;
-			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia protect na true", 0);
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie protect na true", 0);
 			return true;
 		}
 		if(arg.equalsIgnoreCase("false") || arg.equalsIgnoreCase("deny") || arg.equalsIgnoreCase("off")) {
@@ -115,7 +159,7 @@ public class DclobbyCommand implements CommandExecutor {
 				return true;
 			}
 			DyrtCraftLobbyShot.protect = false;
-			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia protect na false", 0);
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie protect na false", 0);
 			return true;
 		} else {
 			sender.sendMessage(Util.prefix() + Util.error() + " Podano nieprawidlowy argument!");
@@ -128,16 +172,16 @@ public class DclobbyCommand implements CommandExecutor {
 		Player player = Bukkit.getServer().getPlayer(reset);
 		if(reset.equalsIgnoreCase(sender.getName())) {
 			// Molek tu byl xD
-			if(!sender.hasPermission("lobby.reset")) {
-				sender.sendMessage(Util.prefix() + Util.permissions("lobby.reset"));
+			if(!sender.isOp()) {
+				sender.sendMessage(Util.prefix() + Util.permissions());
 				return true;
 			}
 			sender.sendMessage(Util.prefix() + Util.reset(reset));
 			DyrtCraftLobbyShot.resetPlayer(player);
 			return true;
 		}
-		if(!sender.hasPermission("lobby.reset.player")) {
-			sender.sendMessage(Util.prefix() + Util.permissions("whitelist.protect.player"));
+		if(!sender.isOp()) {
+			sender.sendMessage(Util.prefix() + Util.permissions());
 			return true;
 		}
 		if(player == null) {
@@ -151,15 +195,15 @@ public class DclobbyCommand implements CommandExecutor {
 	
 	private boolean whitelist(CommandSender sender, String arg) {
 		if(arg == null) {
-			if(!sender.hasPermission("lobby.whitelist")) {
-				sender.sendMessage(Util.prefix() + Util.permissions("lobby.whitelist"));
+			if(!sender.isOp()) {
+				sender.sendMessage(Util.prefix() + Util.permissions());
 				return true;
 			}
 			sender.sendMessage(Util.prefix() + Util.stan("whitelist") + DyrtCraftLobbyShot.whitelist + ".");
 			return true;
 		}
-		if(!sender.hasPermission("lobby.whitelist.set")) {
-			sender.sendMessage(Util.prefix() + Util.permissions("lobby.whitelist.set"));
+		if(!sender.isOp()) {
+			sender.sendMessage(Util.prefix() + Util.permissions());
 			return erArg(sender, "Podano bledny argument");
 		}
 		
@@ -169,7 +213,7 @@ public class DclobbyCommand implements CommandExecutor {
 				return true;
 			}
 			DyrtCraftLobbyShot.whitelist = true;
-			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia whitelist na true", 0);
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie whitelist na true", 0);
 			return true;
 		}
 		if(arg.equalsIgnoreCase("false") || arg.equalsIgnoreCase("deny") || arg.equalsIgnoreCase("off")) {
@@ -178,7 +222,7 @@ public class DclobbyCommand implements CommandExecutor {
 				return true;
 			}
 			DyrtCraftLobbyShot.whitelist = false;
-			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienia whitelist na false", 0);
+			DyrtCraftPlugin.sendMsgToOp(sender.getName() + " zmienil ustawienie whitelist na false", 0);
 			return true;
 		} else {
 			sender.sendMessage(Util.prefix() + Util.error() + " Podano nieprawidlowy argument!");

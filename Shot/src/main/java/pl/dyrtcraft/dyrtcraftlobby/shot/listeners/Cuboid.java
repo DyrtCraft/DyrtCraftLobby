@@ -27,12 +27,12 @@ public class Cuboid implements Listener {
 	public void onBlockBreak(BlockBreakEvent e) {
 		if(DyrtCraftLobbyShot.protect == true) {
 			e.setCancelled(true);
-			if(e.getPlayer().hasPermission("lobby.protect.set")) {
+			if(e.getPlayer().isOp()) {
 				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}
-		if(!e.getPlayer().hasPermission("lobby.interact")) {
+		if(!e.getPlayer().isOp()) {
 			e.setCancelled(true);
 		}
 	}
@@ -51,12 +51,12 @@ public class Cuboid implements Listener {
 	public void onBlockPlace(BlockPlaceEvent e) {
 		if(DyrtCraftLobbyShot.protect == true) {
 			e.setCancelled(true);
-			if(e.getPlayer().hasPermission("lobby.protect.set")) {
+			if(e.getPlayer().isOp()) {
 				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}
-		if(!e.getPlayer().hasPermission("lobby.interact")) {
+		if(!e.getPlayer().isOp()) {
 			e.setCancelled(true);
 		}
 	}
@@ -76,12 +76,12 @@ public class Cuboid implements Listener {
 	public void onPlayerInteract(PlayerInteractEvent e) {
 		if(DyrtCraftLobbyShot.protect == true) {
 			e.setCancelled(true);
-			if(e.getPlayer().hasPermission("lobby.protect.set")) {
+			if(e.getPlayer().isOp()) {
 				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}
-		if(!e.getPlayer().hasPermission("lobby.interact")) {
+		if(!e.getPlayer().isOp()) {
 			e.setCancelled(true);
 		}
 	}

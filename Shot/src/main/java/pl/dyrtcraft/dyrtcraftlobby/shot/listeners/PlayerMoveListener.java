@@ -17,7 +17,7 @@ public class PlayerMoveListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if(e.getPlayer().hasPermission("lobby.interact") && DyrtCraftLobbyShot.protect == false) { return; }
+		if(e.getPlayer().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
 		
 		if(e.getTo().getBlockY() < 60 || e.getTo().getBlockY() > 90) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);

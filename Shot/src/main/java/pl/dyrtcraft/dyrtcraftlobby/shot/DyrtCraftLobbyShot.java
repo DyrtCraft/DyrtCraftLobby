@@ -13,6 +13,7 @@ import org.bukkit.potion.PotionEffectType;
 import pl.DyrtCraft.DyrtCraftXP.api.DyrtCraftPlugin;
 import pl.DyrtCraft.DyrtCraftXP.api.Kits;
 
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.AsyncPlayerChatListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.Cuboid;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.EntityDamageListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.EntityShootBowListener;
@@ -35,6 +36,7 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 	
 	private static DyrtCraftLobbyShot plugin;
 	
+	public static boolean chat;
 	public static boolean protect;
 	public static boolean whitelist;
 
@@ -43,30 +45,38 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		getLogger().info("Uruchamianie DyrtCraftLobby \"Shot\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + "...");
 		long time = System.currentTimeMillis();
 		
-		if(!getServer().getPluginManager().isPluginEnabled("DyrtCraftXP")) {
+		if(Bukkit.getPluginManager().getPlugin("DyrtCraftXP") == null) {
 			DyrtCraftLobbyShot.kickAll();
 			
-			plugin.getServer().getLogger().warning("\n \n \n \n \n");
-			plugin.getServer().getLogger().warning("=========================");
-			plugin.getServer().getLogger().warning("Wylaczanie serwera z powodu braku pluginu DyrtCraftXP!");
-			plugin.getServer().getLogger().warning("=========================");
-			plugin.getServer().getLogger().warning("Wylaczanie serwera z powodu braku pluginu DyrtCraftXP!");
-			plugin.getServer().getLogger().warning("=========================");
-			plugin.getServer().getLogger().warning("Wylaczanie serwera z powodu braku pluginu DyrtCraftXP!");
-			plugin.getServer().getLogger().warning("=========================");
-			plugin.getServer().getLogger().warning("\n");
-			plugin.getServer().shutdown();
+			Bukkit.getLogger().log(Level.SEVERE, "\n");
+			getLogger().log(Level.SEVERE, "===============================================");
+			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
+			getLogger().log(Level.SEVERE, "===============================================");
+			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
+			getLogger().log(Level.SEVERE, "===============================================");
+			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
+			getLogger().log(Level.SEVERE, "===============================================");
+			Bukkit.getLogger().log(Level.SEVERE, "\n");
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {}
+			
+			Bukkit.shutdown();
 			return;
 		}
 		
 		getLogger().info("Ustawianie domyslnych ustawien...");
+		chat = false;
+		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawietnie chat na false", 0);
 		protect = true;
-		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia protect na true", 0);
+		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienie protect na true", 0);
 		whitelist = false;
-		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienia whitelist na false", 0);
+		DyrtCraftPlugin.sendMsgToOp(getServer().getConsoleSender().getName() + " zmienil ustawienie whitelist na false", 0);
 		
 		getLogger().info("Rejestrowanie listenerów...");
 		long listTime = System.currentTimeMillis();
+		getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
 		getServer().getPluginManager().registerEvents(new Cuboid(this), this);
 		getServer().getPluginManager().registerEvents(new EntityDamageListener(this), this);
 		getServer().getPluginManager().registerEvents(new EntityShootBowListener(this), this);
@@ -93,7 +103,7 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		
 		long finTime = System.currentTimeMillis() - time;
 		getLogger().info("DyrtCraftLobby \"Shot\" v" + getDescription().getVersion() + " by " + getDescription().getAuthors() + " zostal zaladowany! (" + finTime + " ms)");
-		DyrtCraftPlugin.sendMsgToOp("DyrtCraftLobby \"Shot\" zostal zaladowny w " + finTime + " ms", 0);
+		DyrtCraftPlugin.sendMsgToOp("DyrtCraftLobby \"Shot\" zostal zaladowany w " + finTime + " ms", 0);
 	}
 	
 	@Override
@@ -110,10 +120,13 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 	}
 	
 	public static void checkNotifications(Player player) {
-		if(player.hasPermission("lobby.protect.set") && protect == false) {
+		if(player.isOp() && chat == true) {
+			player.sendMessage(Util.prefix() + ChatColor.RED + "Ustawienie chat jest na \"true\"! Zmien je uzywajac /dclobby chat false");
+		}
+		if(player.isOp() && protect == false) {
 			player.sendMessage(Util.prefix() + ChatColor.RED + "Ustawienie protect jest na \"false\"! Zmien je uzywajac /dclobby protect true");
 		}
-		if(player.hasPermission("lobby.whitelist.set") && whitelist == true) {
+		if(player.isOp() && whitelist == true) {
 			player.sendMessage(Util.prefix() + ChatColor.RED + "Ustawienie whitelist jest na \"true\"! Zmien je uzywajac /dclobby whitelist false");
 		}
 	}
@@ -130,9 +143,6 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		player.getWorld().setStorm(false);
 		player.getWorld().setThundering(false);
 		
-		/*
-		 * TODO: Fly off and GameMode.CREATIVE
-		 */
 		player.setExp(0);
 		player.setGameMode(GameMode.CREATIVE);
 		player.setAllowFlight(false);

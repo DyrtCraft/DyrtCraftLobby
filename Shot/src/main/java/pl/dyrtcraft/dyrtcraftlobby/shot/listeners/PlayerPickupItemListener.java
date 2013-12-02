@@ -16,7 +16,7 @@ public class PlayerPickupItemListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
-		if(DyrtCraftLobbyShot.protect == false && e.getPlayer().hasPermission("lobby.interact")) {
+		if(DyrtCraftLobbyShot.protect == false && e.getPlayer().isOp()) {
 			return;
 		} else {
 			e.setCancelled(true);
