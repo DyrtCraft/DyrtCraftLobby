@@ -4,6 +4,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class PlayerDeathListener implements Listener {
@@ -17,7 +18,7 @@ public class PlayerDeathListener implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		e.setDeathMessage(null);
-		DyrtCraftLobbyShot.resetPlayer(e.getEntity());
+		DCLobby.getPlayer(e.getEntity()).reset();
 	}
 	
 }

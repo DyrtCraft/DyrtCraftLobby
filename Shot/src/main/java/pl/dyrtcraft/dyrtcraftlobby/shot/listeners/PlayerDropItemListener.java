@@ -5,8 +5,10 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
+import pl.dyrtcraft.dyrtcraftlobby.Setting;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
-import pl.dyrtcraft.dyrtcraftlobby.shot.Util;
+import pl.dyrtcraft.dyrtcraftlobby.shot.utils.Lang;
 
 public class PlayerDropItemListener implements Listener {
 
@@ -18,13 +20,13 @@ public class PlayerDropItemListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerDropItem(PlayerDropItemEvent e) {
-		if(DyrtCraftLobbyShot.protect == true && e.getPlayer().hasPermission("lobby.interact")) {
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == true && e.getPlayer().hasPermission("lobby.interact")) {
 			e.setCancelled(true);
 			if(e.getPlayer().isOp()) {
-				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby wyrzucac itemy nalezy wylaczyc cuboid uzywajac /dclobby protect false");
+				e.getPlayer().sendMessage(Lang.prefix() + ChatColor.GRAY + "Aby wyrzucac itemy nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 		}
-		if(DyrtCraftLobbyShot.protect == false && e.getPlayer().hasPermission("lobby.interact")) { return; }
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == false && e.getPlayer().hasPermission("lobby.interact")) { return; }
 		e.setCancelled(true);
 	}
 	

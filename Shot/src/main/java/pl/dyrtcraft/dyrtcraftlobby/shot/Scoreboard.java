@@ -8,7 +8,7 @@ import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.ScoreboardManager;
 
-import pl.DyrtCraft.DyrtCraftXP.api.XP;
+import pl.dyrtcraft.DyrtCraft;
 
 public class Scoreboard {
 
@@ -37,7 +37,7 @@ public class Scoreboard {
 	
 	public static int getXP(Player player) {
 		try {
-			int xp = XP.getXp(player.getName());
+			int xp = DyrtCraft.getMember(player).getXp();
 			return xp;
 		} catch(Exception ex) {
 			return -1;

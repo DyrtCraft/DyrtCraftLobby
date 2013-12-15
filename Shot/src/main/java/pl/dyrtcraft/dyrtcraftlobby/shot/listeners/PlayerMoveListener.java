@@ -5,6 +5,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
+import pl.dyrtcraft.dyrtcraftlobby.Setting;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class PlayerMoveListener implements Listener {
@@ -17,19 +19,19 @@ public class PlayerMoveListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerMove(PlayerMoveEvent e) {
-		if(e.getPlayer().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
+		if(e.getPlayer().isOp() && DCLobby.getSettings().getValue(Setting.PROTECT) == false) { return; }
 		
 		if(e.getTo().getBlockY() < 60 || e.getTo().getBlockY() > 90) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-			DyrtCraftLobbyShot.resetPlayer(e.getPlayer());
+			DCLobby.getPlayer(e.getPlayer()).reset();
 		}
 		if(e.getTo().getBlockX() < -40 || e.getTo().getBlockX() > 40) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-			DyrtCraftLobbyShot.resetPlayer(e.getPlayer());
+			DCLobby.getPlayer(e.getPlayer()).reset();
 		}
 		if(e.getTo().getBlockZ() < -40 || e.getTo().getBlockZ() > 40) {
 			e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.ENDERMAN_TELEPORT, 10, 1);
-			DyrtCraftLobbyShot.resetPlayer(e.getPlayer());
+			DCLobby.getPlayer(e.getPlayer()).reset();
 		}
 	}
 	

@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.BookMeta;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class Kit {
 	
@@ -72,10 +73,19 @@ public class Kit {
 		return a;
 	}
 	
+	public static ItemStack sklep() {
+		ItemStack a = new ItemStack(Material.EMERALD, 1);
+		ItemMeta aMeta = a.getItemMeta();
+		aMeta.setDisplayName(ChatColor.GOLD + "" + ChatColor.BOLD + "Sklep DyrtCraft Network");
+		a.setItemMeta(aMeta);
+		return a;
+	}
+	
 	public static void sendKit(Player player) {
 		Inventory inv = player.getInventory();
 		inv.setItem(1, Kit.witamyBook());
 		inv.setItem(2, Kit.zakupBook());
+		inv.setItem(8, Kit.sklep());
 	}
 	
 }

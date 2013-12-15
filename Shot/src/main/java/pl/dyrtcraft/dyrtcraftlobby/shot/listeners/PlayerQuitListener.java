@@ -1,5 +1,7 @@
 package pl.dyrtcraft.dyrtcraftlobby.shot.listeners;
 
+import me.confuser.barapi.BarAPI;
+
 import org.bukkit.Color;
 import org.bukkit.FireworkEffect;
 import org.bukkit.FireworkEffect.Type;
@@ -9,7 +11,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.FireworkMeta;
 
-import pl.DyrtCraft.DyrtCraftXP.api.Bar;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class PlayerQuitListener implements Listener {
@@ -38,7 +39,8 @@ public class PlayerQuitListener implements Listener {
 		fwMeta.setPower(1);
 		fw.setFireworkMeta(fwMeta);
 		
-		Bar.removeBar(e.getPlayer());
+		//Bar.removeBar(e.getPlayer());
+		BarAPI.removeBar(e.getPlayer());
 	}
 	
 }

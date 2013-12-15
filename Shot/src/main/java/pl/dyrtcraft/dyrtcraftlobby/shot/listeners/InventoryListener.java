@@ -6,6 +6,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryInteractEvent;
 import org.bukkit.event.inventory.InventoryPickupItemEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
+import pl.dyrtcraft.dyrtcraftlobby.Setting;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class InventoryListener implements Listener {
@@ -19,7 +21,7 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryClick(InventoryClickEvent e) {
 		try {
-			if(e.getWhoClicked().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
+			if(e.getWhoClicked().isOp() && DCLobby.getSettings().getValue(Setting.PROTECT) == false) { return; }
 			e.setCancelled(true);
 		} catch(NullPointerException ex) {}
 	}
@@ -27,7 +29,7 @@ public class InventoryListener implements Listener {
 	@EventHandler
 	public void onInventoryInteract(InventoryInteractEvent e) {
 		try {
-			if(!e.getWhoClicked().isOp() && DyrtCraftLobbyShot.protect == false) { return; }
+			if(!e.getWhoClicked().isOp() && DCLobby.getSettings().getValue(Setting.PROTECT) == false) { return; }
 			e.setCancelled(true);
 		} catch(NullPointerException ex) {}
 	}

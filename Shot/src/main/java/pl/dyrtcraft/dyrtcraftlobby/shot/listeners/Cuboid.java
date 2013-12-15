@@ -12,8 +12,10 @@ import org.bukkit.event.block.BlockSpreadEvent;
 import org.bukkit.event.entity.ExplosionPrimeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
+import pl.dyrtcraft.dyrtcraftlobby.Setting;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
-import pl.dyrtcraft.dyrtcraftlobby.shot.Util;
+import pl.dyrtcraft.dyrtcraftlobby.shot.utils.Lang;
 
 public class Cuboid implements Listener {
 
@@ -25,10 +27,10 @@ public class Cuboid implements Listener {
 	
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent e) {
-		if(DyrtCraftLobbyShot.protect == true) {
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == true) {
 			e.setCancelled(true);
 			if(e.getPlayer().isOp()) {
-				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
+				e.getPlayer().sendMessage(Lang.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}
@@ -49,10 +51,10 @@ public class Cuboid implements Listener {
 	
 	@EventHandler
 	public void onBlockPlace(BlockPlaceEvent e) {
-		if(DyrtCraftLobbyShot.protect == true) {
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == true) {
 			e.setCancelled(true);
 			if(e.getPlayer().isOp()) {
-				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
+				e.getPlayer().sendMessage(Lang.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}
@@ -74,10 +76,10 @@ public class Cuboid implements Listener {
 	
 	@EventHandler
 	public void onPlayerInteract(PlayerInteractEvent e) {
-		if(DyrtCraftLobbyShot.protect == true) {
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == true) {
 			e.setCancelled(true);
 			if(e.getPlayer().isOp()) {
-				e.getPlayer().sendMessage(Util.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
+				e.getPlayer().sendMessage(Lang.prefix() + ChatColor.GRAY + "Aby edytowac teren nalezy wylaczyc cuboid uzywajac /dclobby protect false");
 			}
 			return;
 		}

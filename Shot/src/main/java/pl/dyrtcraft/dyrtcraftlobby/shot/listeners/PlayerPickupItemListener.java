@@ -4,6 +4,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 
+import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
+import pl.dyrtcraft.dyrtcraftlobby.Setting;
 import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
 public class PlayerPickupItemListener implements Listener {
@@ -16,7 +18,7 @@ public class PlayerPickupItemListener implements Listener {
 	
 	@EventHandler
 	public void onPlayerPickupItem(PlayerPickupItemEvent e) {
-		if(DyrtCraftLobbyShot.protect == false && e.getPlayer().isOp()) {
+		if(DCLobby.getSettings().getValue(Setting.PROTECT) == false && e.getPlayer().isOp()) {
 			return;
 		} else {
 			e.setCancelled(true);

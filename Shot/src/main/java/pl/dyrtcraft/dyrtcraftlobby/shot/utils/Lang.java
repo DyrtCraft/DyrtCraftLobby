@@ -1,11 +1,28 @@
-package pl.dyrtcraft.dyrtcraftlobby.shot;
+package pl.dyrtcraft.dyrtcraftlobby.shot.utils;
 
 import org.bukkit.ChatColor;
 
-public class Util {
+import pl.dyrtcraft.dyrtcraftlobby.shot.DyrtCraftLobbyShot;
 
+public class Lang {
+	
 	public static String alreadySet(boolean value) {
 		String a = ChatColor.RED + "To ustawienie juz jest aktualnie na \"" + value + "\"!";
+		return a;
+	}
+	
+	public static String banned(String nickname) {
+		String a = ChatColor.GOLD + "\n= = = = = = = = = = = = = = = = = = = = = = = = = =\n";
+		String b = ChatColor.DARK_RED + "Twój nick (" + nickname + ") jest zablokowany!\n";
+		String c = ChatColor.DARK_RED + "Nie podszywaj sie pod znane osoby!\n";
+		String d = ChatColor.GOLD + "= = = = = = = = = = = = = = = = = = = = = = = = = =\n";
+		String e = ChatColor.BLUE + "To Ty? Zglos sie na TeamSpeak 3 " + ChatColor.ITALIC + "dyrtcraft.pl";
+		return a + b + c + d + e;
+	}
+	
+	public static String bcPrefix() {
+		String a = DyrtCraftLobbyShot.get().getConfig().getString("prefix");
+		a = a.replace("&", "§");
 		return a;
 	}
 	
@@ -29,8 +46,18 @@ public class Util {
 		return a;
 	}
 	
+	public static String longNickname(String nickname) {
+		String a = ChatColor.GOLD + "\n= = = = = = = = = = = = = = = = = = = = = = = = = =\n";
+		String b = ChatColor.DARK_RED + "Twój nick w grze (" + nickname + ") jest za dlugi!\n";
+		String c = ChatColor.DARK_RED + "Uzyj krótszego nicku!\n";
+		String d = ChatColor.GOLD + "= = = = = = = = = = = = = = = = = = = = = = = = = =\n";
+		String e = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "\nDyrtCraft Network";
+		return a + b + c + d + e;
+	}
+	
 	public static String kick() {
-		String a = "TEST";
+		// TODO
+		String a = "Restartowanie serwera - zaloguj sie ponownie";
 		return a;
 	}
 	
@@ -41,6 +68,11 @@ public class Util {
 		String d = ChatColor.GOLD + "= = = = = = = = = = = = = = = = = = = = = = = = = =\n";
 		String e = ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "\nDyrtCraft Network";
 		return a + b + c + d + e;
+	}
+	
+	public static String offline(String player) {
+		String a = ChatColor.RED + "Gracz " + player + " nie jest obecnie online!";
+		return a;
 	}
 	
 	public static String permissions() {
