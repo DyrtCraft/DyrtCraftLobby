@@ -26,18 +26,17 @@ public class AsyncPlayerChatListener implements Listener {
 		if(!e.getPlayer().isOp() && DCLobby.getSettings().getValue(Setting.CHAT) == false) {
 			e.setCancelled(true);
 			e.getPlayer().sendMessage(Lang.prefix() + Lang.chatOff());
-			//DyrtCraftPlugin.sendMsgToOp(e.getPlayer().getName() + " pisze: '" + e.getMessage() + "'", 0);
-			DyrtCraft.getUtils().sendNotify(e.getPlayer().getName() + " pisze: '" + e.getMessage() + "'", false);
+			DyrtCraft.getUtils().sendNotify(e.getPlayer().getName() + ": '" + e.getMessage() + "'", false);
 			return;
 		}
 		
 		if(e.getPlayer().isOp()) {
 			try {
-				e.setFormat(ChatColor.RED + e.getPlayer().getName() + ": " + ChatColor.WHITE + e.getMessage());
+				e.setFormat(ChatColor.RED + "%s" + ": " + ChatColor.WHITE + "%s");
 			} catch(UnknownFormatConversionException ex) {}
 		} else {
 			try {
-				e.setFormat(ChatColor.GRAY + e.getPlayer().getName() + ": " + ChatColor.WHITE + e.getMessage());
+				e.setFormat(ChatColor.GRAY + "%s" + ": " + ChatColor.WHITE + "%s");
 			} catch(UnknownFormatConversionException ex) {}
 		}
 	}

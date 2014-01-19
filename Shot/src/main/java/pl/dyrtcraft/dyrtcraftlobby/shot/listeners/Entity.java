@@ -34,9 +34,6 @@ public class Entity implements Listener {
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onCreateSpawnEvent(CreatureSpawnEvent e) {
 		e.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 7));
-		//if(!(e.getSpawnReason() == SpawnReason.EGG)) {
-			//e.setCancelled(true);
-		//}
 	}
 	
 	@EventHandler

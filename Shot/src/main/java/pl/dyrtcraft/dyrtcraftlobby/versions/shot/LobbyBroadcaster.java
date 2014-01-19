@@ -3,6 +3,8 @@ package pl.dyrtcraft.dyrtcraftlobby.versions.shot;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.confuser.barapi.BarAPI;
+
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -71,10 +73,18 @@ public class LobbyBroadcaster implements Broadcaster, Runnable {
 	public void run() {
 		for(Player player : Bukkit.getOnlinePlayers()) {
 			String message = DCLobby.getBroadcaster().getMessages().get(getIndex());
+			String message2 = message;
 			for(ChatColor color : ChatColor.values()) {
 				message = message.replace("&" + color.getChar(), color.toString()).replace("{PLAYER}", player.getName());
+				message2 = ChatColor.BOLD + message;
 			}
-			player.sendMessage(DCLobby.getBroadcaster().getPrefix() + message);
+			//player.sendMessage(DCLobby.getBroadcaster().getPrefix() + message);
+			BarAPI.setMessage(player, message2, (getInterval() - 2));
+			
+			// World
+			Bukkit.getWorld(player.getWorld().getName()).setStorm(false);
+			Bukkit.getWorld(player.getWorld().getName()).setThundering(false);
+			Bukkit.getWorld(player.getWorld().getName()).setTime(1000);
 		}
 		setIndex(getIndex() + 1);
 	}

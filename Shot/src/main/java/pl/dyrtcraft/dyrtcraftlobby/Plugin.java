@@ -6,7 +6,7 @@ public interface Plugin {
 	
 	List<String> getNicknames();
 	
-	void loadBroadcasts();
+	int loadBroadcasts();
 	
 	void loadNicknames();
 	

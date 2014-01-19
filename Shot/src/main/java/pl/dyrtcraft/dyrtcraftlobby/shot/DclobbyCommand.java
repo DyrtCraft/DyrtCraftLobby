@@ -31,7 +31,8 @@ public class DclobbyCommand implements CommandExecutor {
 					return aboutArg(sender);
 				}
 				if(args[0].equalsIgnoreCase("ban")) {
-					return erArg(sender, "Zbyt malo argumentów");
+					banManage(sender);
+					return true;
 				}
 				if(args[0].equalsIgnoreCase("chat")) {
 					return chatArg(sender, null);
@@ -133,7 +134,7 @@ public class DclobbyCommand implements CommandExecutor {
 			return true;
 		}
 		DCLobby.getPlugin().getNicknames().add(nick);
-		plugin.getConfig().getStringList("banned-nicknames").add(nick);
+		plugin.getConfig().set("banned-nicknames", plugin.getConfig().getStringList("banned-nicknames").add(nick));
 		plugin.saveConfig();
 		plugin.reloadConfig();
 		sender.sendMessage(Lang.prefix() + ChatColor.DARK_GREEN + "Pomyslnie zablokowano nick " + nick + "!");
@@ -152,7 +153,7 @@ public class DclobbyCommand implements CommandExecutor {
 			return true;
 		}
 		DCLobby.getPlugin().getNicknames().remove(nick);
-		plugin.getConfig().getStringList("banned-nicknames").remove(nick);
+		plugin.getConfig().set("banned-nicknames", plugin.getConfig().getStringList("banned-nicknames").remove(nick));
 		plugin.saveConfig();
 		plugin.reloadConfig();
 		sender.sendMessage(Lang.prefix() + ChatColor.DARK_GREEN + "Pomyslnie odblokowano nick " + nick + "!");
@@ -304,6 +305,10 @@ public class DclobbyCommand implements CommandExecutor {
 	}
 	
 	private boolean resetArg(String reset, CommandSender sender) {
+		if(reset.equalsIgnoreCase("CONSOLE")) {
+			sender.sendMessage(Lang.prefix() + ChatColor.RED + "Nie mozna zresetowac konsoli!");
+			return true;
+		}
 		Player player = null;
 		try {
 			player = Bukkit.getServer().getPlayer(reset);

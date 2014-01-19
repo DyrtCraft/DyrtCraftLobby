@@ -56,7 +56,7 @@ public class Shop implements Listener {
 	private static ItemStack createClose() {
 		ItemStack i = new ItemStack(Material.EYE_OF_ENDER, 1);
 		ItemMeta iMeta = i.getItemMeta();
-		iMeta.setDisplayName(ChatColor.DARK_PURPLE + "Zamknij okno");
+		iMeta.setDisplayName(ChatColor.GOLD + "Zamknij okno");
 		i.setItemMeta(iMeta);
 		return i;
 	}
@@ -74,7 +74,7 @@ public class Shop implements Listener {
 		ItemStack i = new ItemStack(Material.EMERALD, 1);
 		ItemMeta iMeta = i.getItemMeta();
 		iMeta.setDisplayName(ChatColor.GOLD + "Twoja ilosc XP:");
-		iMeta.setLore(Arrays.asList(ChatColor.DARK_GREEN + "Posiadasz " + Scoreboard.getXP(player) + " XP"));
+		iMeta.setLore(Arrays.asList(ChatColor.DARK_GREEN + "Posiadasz " + DyrtCraft.getMember(player).getXp() + " XP"));
 		i.setItemMeta(iMeta);
 		return i;
 	}
@@ -87,7 +87,7 @@ public class Shop implements Listener {
 			Player p = (Player) e.getWhoClicked();
 			e.setCancelled(true);
 			if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(compass.getItemMeta().getDisplayName())) {
-				p.openInventory(DyrtCraft.getProxy().getServerChooserInventory());
+				p.openInventory(DyrtCraft.getProxy().getServerChooserInventory(p));
 				return;
 			}
 			if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(close.getItemMeta().getDisplayName())) {
@@ -95,20 +95,17 @@ public class Shop implements Listener {
 				return;
 			}
 			if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(unBan.getItemMeta().getDisplayName())) {
-				// TODO
-				p.sendMessage(ChatColor.YELLOW + "W budowie :P");
+				p.sendMessage(ChatColor.YELLOW + "Wkrótce :P");
 				p.closeInventory();
 				return;
 			}
 			if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(vip.getItemMeta().getDisplayName())) {
-				// TODO
-				p.sendMessage(ChatColor.YELLOW + "W budowie :P");
+				p.sendMessage(ChatColor.YELLOW + "Wkrótce :P");
 				p.closeInventory();
 				return;
 			}
 			if(e.getCurrentItem().getItemMeta().getDisplayName().equalsIgnoreCase(svip.getItemMeta().getDisplayName())) {
-				// TODO
-				p.sendMessage(ChatColor.YELLOW + "W budowie :P");
+				p.sendMessage(ChatColor.YELLOW + "Wkrótce :P");
 				p.closeInventory();
 				return;
 			}

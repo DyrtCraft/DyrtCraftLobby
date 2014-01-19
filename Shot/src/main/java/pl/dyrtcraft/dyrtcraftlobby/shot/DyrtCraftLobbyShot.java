@@ -8,11 +8,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.lenis0012.bukkit.factories.GhostFactory;
-
 import pl.dyrtcraft.DyrtCraft;
+import pl.dyrtcraft.Server;
 import pl.dyrtcraft.dyrtcraftlobby.DCLobby;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.AsyncPlayerChatListener;
+import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.BungeeInventoryListeners;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.Cuboid;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.Entity;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.FoodLevelChangeListener;
@@ -32,10 +32,12 @@ import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PlayerToggleFlightListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.PotionSplashListener;
 import pl.dyrtcraft.dyrtcraftlobby.shot.listeners.SignChangeListener;
 
+import com.comphenix.example.GhostManager;
+
 public class DyrtCraftLobbyShot extends JavaPlugin {
 	
 	private static DyrtCraftLobbyShot plugin;
-	private static GhostFactory ghost;
+	private static GhostManager ghost;
 	
 	@Override
 	public void onEnable() {
@@ -44,10 +46,16 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		
 		try {
 			plugin = this;
-			ghost = new GhostFactory(this, true);
+			ghost = new GhostManager(this);
 			
-			checkDyrtCraftXP();
+			checkPlugins();
 			saveDefaultConfig();
+			
+			getLogger().info("Konfiguracja DyrtCraftXP...");
+			DyrtCraft.getProxy().setCurrentServer(Server.LOBBY);
+			DyrtCraft.getUtils().setInfoBook(false);
+			DyrtCraft.getUtils().setShop(true);
+			getLogger().info("Skonfigurowano DyrtCraftXP pod serwer Lobby!");
 			
 			getLogger().info("Ladowanie BarAPI by confuser...");
 			getServer().getPluginManager().registerEvents(new BarAPI(), this);
@@ -55,8 +63,8 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 			
 			getLogger().info("Ladowanie automatycznych wiadomosci...");
 			DCLobby.getBroadcaster().setInterval(getConfig().getInt("interval"));
-			DCLobby.getPlugin().loadBroadcasts();
-			getLogger().info("Ustawiono automatyczne wiadomosci (" + DCLobby.getBroadcaster().getMessages().size() + ")!");
+			int fail = DCLobby.getPlugin().loadBroadcasts();
+			getLogger().info("Ustawiono automatyczne wiadomosci (" + DCLobby.getBroadcaster().getMessages().size() + "), z czego bledne to " + fail);
 			
 			getLogger().info("Ladowanie zablokowanych nicków uzytkowników...");
 			DCLobby.getPlugin().loadNicknames();
@@ -71,27 +79,17 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 			long finListTime = System.currentTimeMillis() - listTime;
 			getLogger().info("Pomyslnie zarejestrowano listenery! (" + finListTime + " ms)");
 			
-			getLogger().info("Rejestrowanie komend...");
 			getCommand("dclobby").setExecutor(new DclobbyCommand(this));
-			getLogger().info("Zarejestrowano komendy! " + getDescription().getCommands());
 			
-			getLogger().info("Resetowanie graczy online...");
-			int players = 0;
 			for(Player player : Bukkit.getOnlinePlayers()) {
-				DCLobby.getPlayer(player).reset();
-				players = players + 1;
+				getGhosts().setGhost(player, true);
 			}
-			getLogger().info("Zresetowano wszystkich graczy online (" + players + ")!");
 			
 			DCLobby.getBroadcaster().schedule();
 		} catch(Exception ex) {
 			DCLobby.getServer().kickAll();
 			
 			Bukkit.getLogger().log(Level.SEVERE, "\n");
-			getLogger().log(Level.SEVERE, "===============================================");
-			getLogger().log(Level.SEVERE, "Wylaczanie serwera - Blad podczas uruchamiania!");
-			getLogger().log(Level.SEVERE, "===============================================");
-			getLogger().log(Level.SEVERE, "Wylaczanie serwera - Blad podczas uruchamiania!");
 			getLogger().log(Level.SEVERE, "===============================================");
 			getLogger().log(Level.SEVERE, "Wylaczanie serwera - Blad podczas uruchamiania!");
 			getLogger().log(Level.SEVERE, "===============================================");
@@ -113,14 +111,14 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 	
 	@Override
 	public void onDisable() {
-		DCLobby.getServer().kickAll();
+		//DCLobby.getServer().kickAll();
 	}
 	
 	public static DyrtCraftLobbyShot get() {
 		return plugin;
 	}
 	
-	public static GhostFactory getGhosts() {
+	public static GhostManager getGhosts() {
 		return ghost;
 	}
 	
@@ -128,32 +126,25 @@ public class DyrtCraftLobbyShot extends JavaPlugin {
 		plugin.getLogger().log(Level.INFO, msg);
 	}
 	
-	private void checkDyrtCraftXP() {
+	private void checkPlugins() {
 		if(Bukkit.getPluginManager().getPlugin("DyrtCraftXP") == null) {
 			DCLobby.getServer().kickAll();
-			
 			Bukkit.getLogger().log(Level.SEVERE, "\n");
 			getLogger().log(Level.SEVERE, "===============================================");
 			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
 			getLogger().log(Level.SEVERE, "===============================================");
-			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
-			getLogger().log(Level.SEVERE, "===============================================");
-			getLogger().log(Level.SEVERE, "Wylaczanie serwera - braku pluginu DyrtCraftXP!");
-			getLogger().log(Level.SEVERE, "===============================================");
 			Bukkit.getLogger().log(Level.SEVERE, "\n");
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {}
-			
 			Bukkit.shutdown();
 			return;
 		}
 	}
 	
 	private void registerListeners() {
+		getServer().getPluginManager().registerEvents(new BarAPI(), this);
 		getServer().getPluginManager().registerEvents(new Shop(), this);
+		
 		getServer().getPluginManager().registerEvents(new AsyncPlayerChatListener(this), this);
+		getServer().getPluginManager().registerEvents(new BungeeInventoryListeners(this), this);
 		getServer().getPluginManager().registerEvents(new Cuboid(this), this);
 		getServer().getPluginManager().registerEvents(new Entity(this), this);
 		getServer().getPluginManager().registerEvents(new FoodLevelChangeListener(this), this);

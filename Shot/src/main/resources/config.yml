@@ -7,7 +7,7 @@ banned-nicknames:
     - 'jdabrowsky'
     - 'sk89q'
     - 'sethbling'
-    - 'md-5'
+    - 'md_5'
     - 'xnolif'
     - 'dnku'
     - 'iroll23'
@@ -24,7 +24,7 @@ banned-nicknames:
     - 'spidek100'
     - 'monsieurapple'
     - 'caclingpanda'
-    - 'pandabatalion'
+    - 'pandabattalion'
     - 'keralis2'
     - 'buraczek'
     - 'ctsg'
@@ -36,9 +36,19 @@ banned-nicknames:
     - 'lexxusspl'
     - 'slamacow'
     - 'deadmau5'
+    - 'needyourblood'
+    - 'jjayjoker'
 prefix: '&cOgloszenie: '
 interval: 60
 messages:
     - '&bPrzykladowa wiadomosc'
     - '&7Nastepna przykladowa wiadomosc'
     - '&1Ostatnia przykladowa wiadomosc'
+motd:
+    new:
+        - '&6&lWitaj {PLAYER} na DyrtCraft Network!'
+        - '&cPrzeczytaj regulamin w pierwszej ksiazce!'
+        - '&8= = = = => Dobrej zabawy!'
+    played:
+        - '&6&lWitaj {PLAYER} ponownie na DyrtCraft Network!'
+        - '&8= = = = => Dobrej zabawy!'

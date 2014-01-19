@@ -32,7 +32,7 @@ public class PlayerInteractListener implements Listener {
 				// Compass
 				if(e.getItem().getType() == Material.COMPASS) {
 					if(e.getPlayer().isOp() && DCLobby.getSettings().getValue(Setting.PROTECT) == false) { return; }
-					e.getPlayer().openInventory(DyrtCraft.getProxy().getServerChooserInventory());
+					e.getPlayer().openInventory(DyrtCraft.getProxy().getServerChooserInventory(e.getPlayer()));
 				}
 			}
 		} catch(NullPointerException ex) {}
